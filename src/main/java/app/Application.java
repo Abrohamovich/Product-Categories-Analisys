@@ -1,9 +1,14 @@
 package app;
 
+import app.filter.CategoryFilter;
+import app.filter.PriceFilter;
+import app.filter.ProductFilter;
 import app.model.Product;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Application {
     public static void main(String[] args) {
@@ -21,5 +26,20 @@ public class Application {
                 new Product("Gaming Chair", "Furniture", 250.0),
                 new Product("Smartwatch", "Electronics", 300.0)
         );
+
+        ProductFilter<String, Double> priceFilter = new PriceFilter();
+        Map<String, Double> averageFilteredProducts = priceFilter.filter(products);
+        System.out.println("1) Average price in each category:");
+        averageFilteredProducts.forEach((category,price)->System.out.println(category+" — "+price));
+
+        ProductFilter<String, List<Product>> categoryFilter = new CategoryFilter();
+        Map<String, List<Product>> categoryFilteredProducts = categoryFilter.filter(products);
+        System.out.println("\n2) Categories and their products:");
+        categoryFilteredProducts.forEach((category, product) -> {
+            System.out.println(category + ":");
+            product.forEach(p->System.out.println("\t" + p.getName()));
+        });
+
+
     }
 }
