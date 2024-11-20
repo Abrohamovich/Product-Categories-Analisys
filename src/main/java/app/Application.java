@@ -8,7 +8,8 @@ import app.model.Product;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
+
 
 public class Application {
     public static void main(String[] args) {
@@ -40,6 +41,9 @@ public class Application {
             product.forEach(p->System.out.println("\t" + p.getName()));
         });
 
-
+        System.out.println("3) Category with biggest average price:");
+        Optional<Map.Entry<String, Double>> max = averageFilteredProducts.entrySet().stream()
+                .max(Map.Entry.comparingByValue());
+        max.ifPresent((p)->System.out.println(p.getKey() + " — " + p.getValue()));
     }
 }
